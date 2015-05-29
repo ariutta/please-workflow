@@ -18,11 +18,14 @@ gulp.task('build-docs', function(callback) {
   //jsdoc -t "./node_modules/jaguarjs-jsdoc/" -c
   //    "./jsdoc-conf.json" "./lib/" -r "./README.md" -d "./docs/"
 
-  utils.createMkdirpStream('./docs')
+  var parentPackageDir = __dirname + '/../../../';
+  var docsDir = parentPackageDir + 'docs';
+  utils.createMkdirpStream(docsDir)
     // TODO why does using @private give an error?
     // We can't use stderr as err until we handle that.
     .through(utils.createExecStream('jsdoc -t "./node_modules/jaguarjs-jsdoc/" -c ' +
-        '"./jsdoc-conf.json" "./lib/" -r "./README.md" -d "./docs/"'))
+        '"' + parentPackageDir + 'jsdoc-conf.json" ' + parentPackageDir + '"lib/" -r ' +
+        parentPackageDir + '"README.md" -d "' + docsDir + '/"'))
     .errors(function(err, push) {
       throw err;
     })
