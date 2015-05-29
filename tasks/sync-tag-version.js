@@ -2,7 +2,7 @@ var config = require('../config.json');
 var fs = require('fs');
 var git = require('gulp-git');
 var gitStreaming = require('../util/git-streaming.js');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var metadataFilePaths = config.metadataFilePaths;
 

@@ -1,5 +1,5 @@
-var gulp = require('gulp');
-var gulpSequence = require('gulp-sequence');
+var gulp = require(__dirname + '/../../gulp');
+var gulpSequence = require(__dirname + '/../../gulp-sequence');
 
 /* Task Steps
  * Manually commit in master, then this task will:

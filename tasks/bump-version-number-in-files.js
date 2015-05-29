@@ -1,11 +1,11 @@
 var bump = require('gulp-bump');
 var config = require('../config.json');
 var getVersionType = require('../util/get-version-type.js');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var JSONStream = require('JSONStream');
 var metadataFilePaths = config.metadataFilePaths;
-var oldPackageJson = require('../../package.json');
+var oldPackageJson = require('../../../package.json');
 var replace = require('gulp-regex-replace');
 
 // Update bower, component, npm all at once:

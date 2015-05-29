@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var killStream = require('../util/kill-stream.js');
 var utils = require('../util/utils.js');
 

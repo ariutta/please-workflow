@@ -3,7 +3,7 @@ var gitStreaming = require('../util/git-streaming.js');
 var gulp = require('gulp');
 var highland = require('highland');
 var killStream = require('../util/kill-stream.js');
-var packageJson = require('../../package.json');
+var packageJson = require('../../../package.json');
 var utils = require('../util/utils.js');
 
 // publish to github repo, github pages and npm.

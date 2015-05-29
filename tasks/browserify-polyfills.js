@@ -12,7 +12,8 @@ var buffer = require('vinyl-buffer');
 var bundleLogger = require('../util/bundle-logger.js');
 var config = require('../config.json');
 var fs = require('fs');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
+var modernizr = require('gulp-modernizr');
 var handleErrors = require('../util/handle-errors.js');
 var highland = require('highland');
 var mkdirp = require('mkdirp');
@@ -22,17 +23,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
 
+//gulp.task('browserify-polyfills', ['modernizr'], function() {
 gulp.task('browserify-polyfills', function() {
-
-  var modernizr = require('modernizr');
-
-  modernizr.build({
-    'feature-detects': config.modernizrFeatureDetects,
-  }, function(result) {
-    mkdirp('./tmp', function(err) {
-      fs.writeFileSync('./tmp/modernizr-custom.js', result);
-    });
-  });
 
   var packageJson;
 
@@ -47,8 +39,9 @@ gulp.task('browserify-polyfills', function() {
 
   var bundler = bundleMethod({
     // Specify the entry point of your app
-    entries: ['./tmp/modernizr-custom.js',
-      './lib/polyfills.js']
+    entries: ['./index.js']
+      //'./lib/polyfills.js'
+      //'./node_modules/kaavio/lib/polyfills.js']
   })
   .ignore('commander')
   .ignore('cheerio')

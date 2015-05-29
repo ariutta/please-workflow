@@ -1,8 +1,8 @@
 // see setup guide for using with gulp: http://www.browsersync.io/docs/gulp/
 var browserSync = require('browser-sync');
 var evt = browserSync.emitter;
-var gulp        = require('gulp');
-var packageJson = require('../../package.json');
+var gulp = require(__dirname + '/../../gulp');
+var packageJson = require('../../../package.json');
 var reload      = browserSync.reload;
 
 evt.on('rs', function() {

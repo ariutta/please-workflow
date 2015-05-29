@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var buildBranch = require('gulp-build-branch');
 
 gulp.task('github-pages', function githubPages() {

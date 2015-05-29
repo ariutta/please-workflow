@@ -11,7 +11,7 @@ var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var bundleLogger = require('../util/bundle-logger.js');
 var fs = require('fs');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var handleErrors = require('../util/handle-errors.js');
 var highland = require('highland');
 var mkdirp = require('mkdirp');
@@ -37,10 +37,7 @@ gulp.task('browserify', function() {
 
   var bundler = bundleMethod({
     // Specify the entry point of your app
-    entries: [//'./index.js',
-      './lib/wikipathways-kaavio-element.js',
-      './lib/jquery-plugin.js'
-    ]
+    entries: ['./index.js']
   });
 
   var bundle = function() {

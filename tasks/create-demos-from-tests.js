@@ -1,5 +1,5 @@
 var fs = require('fs');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var replace = require('gulp-regex-replace');
 

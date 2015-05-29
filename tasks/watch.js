@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 
 gulp.task('watch', ['set-watch', 'browser-sync'], function() {
 	// Note: The browserify task handles js recompiling with watchify
