@@ -1,6 +1,6 @@
 var exec = require('child_process').exec;
 var gitStreaming = require('../util/git-streaming.js');
-var gulp = require('gulp');
+var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var killStream = require('../util/kill-stream.js');
 var packageJson = require('../../../package.json');

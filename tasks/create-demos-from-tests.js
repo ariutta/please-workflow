@@ -9,11 +9,10 @@ gulp.task('create-demos-from-tests', function(done) {
   var packageJson = JSON.parse(fs.readFileSync(
       'package.json', 'utf8'));
 
-  return gulp.src(['./test/web-component-demos/**',
-                   './test/jquery-demos/**',
-                   './test/other-demos/**'],
+  return gulp.src(['./index.html',
+                   './test/lib/**',
+                   './test/browser-tests/**'],
                    {base: './test'})
-
     .pipe(replace({
       regex: packageJson.name + '-polyfills-dev.bundle',
       replace: packageJson.name + '-polyfills-' + packageJson.version + '.bundle.min'
