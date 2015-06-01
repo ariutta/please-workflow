@@ -24,7 +24,7 @@ var uglify = require('gulp-uglify');
 var watchify = require('watchify');
 
 //gulp.task('browserify-polyfills', ['modernizr'], function() {
-gulp.task('browserify-polyfills', function() {
+gulp.task('browserify-polyfills', ['lint'], function() {
 
   var packageJson;
 
