@@ -32,60 +32,73 @@ gulp.task('browserify', ['lint'], function() {
     packageJson = JSON.parse(fs.readFileSync('package.json'));
     var version = packageJson.version;
     var name = packageJson.name;
-    return name + '-dev.bundle';
+    //return name + '-dev.bundle';
+    return name + '-' + packageJson.version + '.bundle.min';
   };
 
   var bundler = bundleMethod({
-    // Specify the entry point of your app
-    entries: ['./index.js']
-  });
+    // Required watchify args
+    cache: {}, packageCache: {}, fullPaths: true,
+    // Browserify Options
+    // specify entry point of app
+    entries: ['./index.js'],
+    // Enable source maps!
+    debug: true,
+    //insertGlobals : true,
+    //exclude: 'cheerio'
+	});
+  /*
+  // enable fs.readFileSync() in browser
+  .transform('brfs')
+  .transform('deglobalify');
+  //*/
 
   var bundle = function() {
-    // Log when bundling starts
+		// Log when bundling starts
     bundleLogger.start();
 
     return bundler
-    .bundle({
-      insertGlobals : true,
-      // Enable source maps!
-      debug: true
-    })
-    // Report compile errors
-    .on('error', handleErrors)
-    // Use vinyl-source-stream to make the
-    // stream gulp compatible. Specify the
-    // desired output filename here.
-    .pipe(source(getBundleName() + '.js'))
-    .pipe(highland.pipeline(function(stream) {
-      if (global.isWatching) {
-        return stream;
-      }
+			.bundle()
+			// Report compile errors
+			.on('error', handleErrors)
+			// Use vinyl-source-stream to make the
+			// stream gulp compatible. Specify the
+			// desired output filename here.
+      .pipe(source(getBundleName() + '.js'))
+      .pipe(highland.pipeline(function(stream) {
+        if (global.isWatching) {
+          return stream;
+        }
 
-      return stream
-        // These steps are only enabled when
-        // a watch is not set.
-        // They are too slow to enable
-        // during development.
-        .through(buffer())
-        .through(rename(function(path) {
-          path.basename = path.basename.replace(
-              '-dev.bundle', '-' + packageJson.version + '.bundle.min');
-        }))
-        .through(sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        .through(uglify())
-        .through(sourcemaps.write('./'))
-        .through(gulp.dest('./dist/'))
-        .through(gulp.dest('./demo/lib/' + packageJson.name + '/'));
-    }))
-    // Specify the output destination
-    .pipe(gulp.dest('./test/lib/' + packageJson.name + '/'))
-    // Log when bundling completes!
-    .on('end', bundleLogger.end);
+        return stream
+          // These steps are only enabled when
+          // a watch is not set.
+          // They are too slow to enable
+          // during development.
+          .through(buffer())
+          /*
+          .through(rename(function(path) {
+            path.basename = path.basename.replace(
+                '-dev.bundle', '-' + packageJson.version + '.bundle.min');
+          }))
+          //*/
+          .through(sourcemaps.init({loadMaps: true}))
+          // Add transformation tasks to the pipeline here.
+          .through(uglify())
+          .through(sourcemaps.write('./'))
+          //.through(sourcemaps.write('/' + packageJson.name + '/lib/' + packageJson.name + '/'))
+          .through(gulp.dest('./dist/'))
+          .through(gulp.dest('./demo/lib/' + packageJson.name + '/'));
+      }))
+      // Specify the output destination
+      .pipe(gulp.dest('./test/lib/' + packageJson.name + '/'))
+			// Log when bundling completes!
+			.on('end', bundleLogger.end);
   };
 
   if (global.isWatching) {
-    // Rebundle with watchify on changes.
+		// Rebundle with watchify on changes.
+    bundler = watchify(bundler);
     bundler.on('update', bundle);
   }
 

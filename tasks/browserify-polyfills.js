@@ -38,10 +38,17 @@ gulp.task('browserify-polyfills', ['lint'], function() {
   };
 
   var bundler = bundleMethod({
-    // Specify the entry point of your app
-    entries: ['./index.js']
+    // Required watchify args
+    cache: {}, packageCache: {}, fullPaths: true,
+    // Browserify Options
+    // specify entry point of app
+    entries: ['./index.js'],
       //'./lib/polyfills.js'
       //'./node_modules/kaavio/lib/polyfills.js']
+    // Enable source maps!
+    debug: true,
+    //insertGlobals : true,
+    //exclude: 'cheerio'
   })
   .ignore('commander')
   .ignore('cheerio')
@@ -54,12 +61,7 @@ gulp.task('browserify-polyfills', ['lint'], function() {
     bundleLogger.start();
 
     return bundler
-    .bundle({
-      insertGlobals : true,
-      exclude: 'cheerio',
-      // Enable source maps!
-      debug: true
-    })
+    .bundle()
     // Report compile errors
     .on('error', handleErrors)
     // Use vinyl-source-stream to make the
