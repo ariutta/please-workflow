@@ -9,9 +9,9 @@ gulp.task('create-demos-from-tests', function(done) {
   var packageJson = JSON.parse(fs.readFileSync(
       'package.json', 'utf8'));
 
-  return gulp.src(['./index.html',
-                   './test/lib/**',
-                   './test/browser-tests/**'],
+  return highland(gulp.src(['./test/index.html',
+                            './test/lib/**',
+                            './test/browser-tests/**'],
                    {base: './test'})
     .pipe(replace({
       regex: packageJson.name + '-polyfills-dev.bundle',
@@ -20,6 +20,10 @@ gulp.task('create-demos-from-tests', function(done) {
     .pipe(replace({
       regex: packageJson.name + '-dev.bundle',
       replace: packageJson.name + '-' + packageJson.version + '.bundle.min'
-    }))
+    })))
+    // these are not included, because they don't have the string we're replacing.
+    .concat(gulp.src(['./test/index.html',
+                   './test/lib/**/*'],
+                   {base: './test'}))
 		.pipe(gulp.dest('./demo'));
 });
