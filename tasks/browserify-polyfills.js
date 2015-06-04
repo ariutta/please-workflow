@@ -28,16 +28,14 @@ gulp.task('browserify-polyfills', ['lint'], function() {
 
   var packageJson;
 
-  var bundleMethod = global.isWatching ? watchify : browserify;
-
   var getBundleName = function() {
-    packageJson = JSON.parse(fs.readFileSync('package.json'));
+    packageJson = JSON.parse(fs.readFileSync(__dirname + '/../../../package.json'));
     var version = packageJson.version;
     var name = packageJson.name;
     return name + '-polyfills-dev.bundle';
   };
 
-  var bundler = bundleMethod({
+  var bundler = browserify({
     // Required watchify args
     cache: {}, packageCache: {}, fullPaths: true,
     // Browserify Options

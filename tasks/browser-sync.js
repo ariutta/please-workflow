@@ -10,6 +10,8 @@ evt.on('rs', function() {
 });
 
 gulp.task('browser-sync', ['browserify', 'browserify-polyfills'], function() {
+  console.log('packageJson');
+  console.log(packageJson);
   browserSync(['./index.js', './lib/polyfills.js'], {
 		server: {
 			baseDir: './'
@@ -20,6 +22,7 @@ gulp.task('browser-sync', ['browserify', 'browserify-polyfills'], function() {
     startPath: './test/'
 	});
 
-  gulp.watch(['./test/lib/' + packageJson.name + '/' + packageJson.name + '-dev.bundle.js'])
+  gulp.watch(['./test/lib/' + packageJson.name + '/' +
+      packageJson.name + '-dev.bundle.js'])
     .on('change', reload);
 });

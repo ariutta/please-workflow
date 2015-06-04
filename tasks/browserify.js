@@ -21,22 +21,18 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
 
-//gulp.task('browserify', ['browserify-polyfills'], function() {
-gulp.task('browserify', ['lint'], function() {
-
-  var bundleMethod = global.isWatching ? watchify : browserify;
+gulp.task('browserify', ['lint', 'browserify-polyfills'], function() {
 
   var packageJson;
 
   var getBundleName = function() {
-    packageJson = JSON.parse(fs.readFileSync('package.json'));
+    packageJson = JSON.parse(fs.readFileSync(__dirname + '/../../../package.json'));
     var version = packageJson.version;
     var name = packageJson.name;
-    //return name + '-dev.bundle';
-    return name + '-' + packageJson.version + '.bundle.min';
+    return name + '-dev.bundle';
   };
 
-  var bundler = bundleMethod({
+  var bundler = browserify({
     // Required watchify args
     cache: {}, packageCache: {}, fullPaths: true,
     // Browserify Options
@@ -76,12 +72,10 @@ gulp.task('browserify', ['lint'], function() {
           // They are too slow to enable
           // during development.
           .through(buffer())
-          /*
           .through(rename(function(path) {
             path.basename = path.basename.replace(
                 '-dev.bundle', '-' + packageJson.version + '.bundle.min');
           }))
-          //*/
           .through(sourcemaps.init({loadMaps: true}))
           // Add transformation tasks to the pipeline here.
           .through(uglify())
