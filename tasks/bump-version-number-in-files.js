@@ -5,12 +5,17 @@ var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var JSONStream = require('JSONStream');
 var metadataFilePaths = config.metadataFilePaths;
+var mkdirp = require('mkdirp');
 var oldPackageJson = require('../../../package.json');
+var path = require('path');
 var replace = require('gulp-regex-replace');
 
 // Update bower, component, npm all at once:
-gulp.task('bump-version-number-in-files',
-    function bumpVersionNumberInFiles(callback) {
+gulp.task('bump-version-number-in-files', function bumpVersionNumberInFiles(callback) {
+
+  mkdirp.sync(path.join(__dirname, '..', '..', 'demo'));
+  mkdirp.sync(path.join(__dirname, '..', '..', 'test'));
+
   getVersionType.each(function(versionType) {
     console.log('versionType');
     console.log(versionType);
@@ -49,10 +54,10 @@ gulp.task('bump-version-number-in-files',
           });
         }
 
-        function replacePolyfillVersionedName() {
+        function replaceVersionedPath() {
           return replace({
-            regex: oldPackageJson.name + '-polyfills-\\d+\\.\\d+\\.\\d+',
-            replace: oldPackageJson.name + '-polyfills-' + version.new
+            regex: oldPackageJson.name + '\\/\\d+\\.\\d+\\.\\d+',
+            replace: oldPackageJson.name + '/' + version.new
           });
         }
 
@@ -75,7 +80,7 @@ gulp.task('bump-version-number-in-files',
           gulp.src([
             './demo/*.html'
           ])
-          .pipe(replacePolyfillVersionedName())
+          .pipe(replaceVersionedPath())
           .pipe(replaceVersionedName())
           .pipe(gulp.dest('./demo/'))
         )

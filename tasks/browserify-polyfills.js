@@ -16,7 +16,7 @@ var gulp = require(__dirname + '/../../gulp');
 var modernizr = require('gulp-modernizr');
 var handleErrors = require('../util/handle-errors.js');
 var highland = require('highland');
-var mkdirp = require('mkdirp');
+var path = require('path');
 var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
@@ -26,13 +26,13 @@ var watchify = require('watchify');
 //gulp.task('browserify-polyfills', ['modernizr'], function() {
 gulp.task('browserify-polyfills', ['lint'], function() {
 
-  var packageJson;
+  var packageJson = JSON.parse(fs.readFileSync(path.join(
+        __dirname, '..', '..', '..', 'package.json')));
 
   var getBundleName = function() {
-    packageJson = JSON.parse(fs.readFileSync(__dirname + '/../../../package.json'));
     var version = packageJson.version;
     var name = packageJson.name;
-    return name + '-polyfills-dev.bundle';
+    return 'polyfills.bundle';
   };
 
   var bundler = browserify({
@@ -40,7 +40,7 @@ gulp.task('browserify-polyfills', ['lint'], function() {
     cache: {}, packageCache: {}, fullPaths: true,
     // Browserify Options
     // specify entry point of app
-    entries: ['./index.js'],
+    entries: ['index.js'],
       //'./lib/polyfills.js'
       //'./node_modules/kaavio/lib/polyfills.js']
     // Enable source maps!
@@ -78,20 +78,17 @@ gulp.task('browserify-polyfills', ['lint'], function() {
         // during development.
         .through(buffer())
         .through(rename(function(path) {
-          path.basename = path.basename.replace(
-              '-dev.bundle', '-' + packageJson.version + '.bundle.min');
+          path.extname = '.min.js';
         }))
         .through(sourcemaps.init({loadMaps: true}))
         // Add transformation tasks to the pipeline here.
         .through(uglify())
         .through(sourcemaps.write('./'))
-        .through(gulp.dest('./dist/'))
-        // No need to copy to test dir,
-        // because we copy from dist to test.
-        .through(gulp.dest('./demo/lib/' + packageJson.name + '/'));
+        .through(gulp.dest('dist/' + packageJson.version + '/'))
+        .through(gulp.dest('demo/lib/' + packageJson.name + '/' + packageJson.version + '/'));
     }))
     // Specify the output destination
-    .pipe(gulp.dest('./test/lib/' + packageJson.name + '/'))
+    .pipe(gulp.dest('test/lib/' + packageJson.name + '/dev/'))
     // Log when bundling completes!
     .on('end', bundleLogger.end);
   };

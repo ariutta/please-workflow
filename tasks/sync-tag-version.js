@@ -5,10 +5,16 @@ var gitStreaming = require('../util/git-streaming.js');
 var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');
 var metadataFilePaths = config.metadataFilePaths;
+var mkdirp = require('mkdirp');
+var path = require('path');
 
 gulp.task('sync-tag-version', function syncTagVersion(callback) {
-  var package = JSON.parse(fs.readFileSync('package.json'));
+  var package = JSON.parse(fs.readFileSync(path.join(
+        __dirname, '..', '..', 'package.json')));
   var version = package.version;
+
+  mkdirp.sync(path.join(__dirname, '..', '..', 'dist'));
+  mkdirp.sync(path.join(__dirname, '..', '..', 'docs'));
 
   gitStreaming.readTags
   .reduce(false, function checkTagExists(accumulator, tag) {

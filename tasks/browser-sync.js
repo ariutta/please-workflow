@@ -2,16 +2,22 @@
 var browserSync = require('browser-sync');
 var evt = browserSync.emitter;
 var gulp = require(__dirname + '/../../gulp');
+var mkdirp = require('mkdirp');
 var packageJson = require('../../../package.json');
-var reload      = browserSync.reload;
+var path = require('path');
+var reload = browserSync.reload;
 
 evt.on('rs', function() {
   console.log('You want to reload BrowserSync!');
 });
 
 gulp.task('browser-sync', ['browserify', 'browserify-polyfills'], function() {
-  console.log('packageJson');
-  console.log(packageJson);
+
+  mkdirp.sync(path.join(__dirname, '..', '..', 'lib'));
+  var devCompileTargetDir = path.join('test', 'lib', packageJson.name, 'dev');
+  var devCompileTargetDirRel = path.join(__dirname, '..', '..', devCompileTargetDir);
+  mkdirp.sync(devCompileTargetDirRel);
+
   browserSync(['./index.js', './lib/polyfills.js'], {
 		server: {
 			baseDir: './'
@@ -22,7 +28,6 @@ gulp.task('browser-sync', ['browserify', 'browserify-polyfills'], function() {
     startPath: './test/'
 	});
 
-  gulp.watch(['./test/lib/' + packageJson.name + '/' +
-      packageJson.name + '-dev.bundle.js'])
+  gulp.watch([path.join(devCompileTargetDir, packageJson.name + '.bundle.js'])
     .on('change', reload);
 });
