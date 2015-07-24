@@ -13,12 +13,10 @@ gulp.task('commit-after-build', function commitAfterBuild(callback) {
   var package = JSON.parse(fs.readFileSync(parentPackageDir + 'package.json'));
   var version = package.version;
 
-  gulp.src(['./dist/',
-            './docs/',
-            './test/lib/',
-            './test/jquery-demos/',
-            './test/web-component-demos/',
-            './demo/',
+  gulp.src([
+            './test/jquery-demos/*.html',
+            './test/web-component-demos/*.html',
+            './demo/*.html',
             './README.md']
             .concat(metadataFilePaths)
             .map(function(path) {

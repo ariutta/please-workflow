@@ -28,6 +28,6 @@ gulp.task('browser-sync', ['browserify', 'browserify-polyfills'], function() {
     startPath: './test/'
 	});
 
-  gulp.watch([path.join(devCompileTargetDir, packageJson.name + '.bundle.js'])
+  gulp.watch([path.join(devCompileTargetDir, packageJson.name + '.bundle.js')])
     .on('change', reload);
 });
