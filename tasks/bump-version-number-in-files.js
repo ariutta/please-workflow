@@ -1,5 +1,5 @@
 var bump = require('gulp-bump');
-var config = require('../config.json');
+var config = require('../workflow-bob.json');
 var getVersionType = require('../util/get-version-type.js');
 var gulp = require(__dirname + '/../../gulp');
 var highland = require('highland');

@@ -13,5 +13,10 @@
     "svg/foreignobject",
     "svg/inline",
     "svg/smil"
+  ],
+  "integrations": [
+	  "node",
+	  "jquery",
+	  "web-component"
   ]
 }

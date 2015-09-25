@@ -1,4 +1,4 @@
-var config = require('../config.json');
+var config = require('../workflow-bob.json');
 var fs = require('fs');
 var git = require('gulp-git');
 var gitStreaming = require('../util/git-streaming.js');
