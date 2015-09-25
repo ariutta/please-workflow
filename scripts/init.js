@@ -38,6 +38,7 @@ var dependentProjectDirContentSource = utils.readdirSource(dependentProjectDir)
   .toArray();
 
 var neededDirPathList = [
+  path.join(dependentProjectDir, 'lib'),
   path.join(dependentProjectDir, 'demo'),
   path.join(dependentProjectDir, 'docs'),
   path.join(dependentProjectDir, 'dist'),
