@@ -57,7 +57,6 @@
     "express": "~3.4.7",
     "freeport": "~1.0.4",
     "gulp": "^3.8.11",
-    "gulp-sequence": "~0.3.1"
     "gulp-brfs": "~0.1.0",
     "gulp-browserify": "~0.5.1",
     "gulp-build-branch": "~0.1.4",
@@ -99,7 +98,7 @@
     "rsyncwrapper": "~0.4.1",
     "run-sequence": "~0.3.6",
     "rx": "^2.5.3",
-    "rx-node": "^1.0.1"
+    "rx-node": "^1.0.1",
     "selenium-launcher": "git://github.com/ariutta/nodejs-selenium-launcher",
     "selenium-standalone": "~2.44.0-7",
     "sinon": "~1.12.1",
