@@ -1,3 +1,9 @@
+# please-workflow
+
+Workflow helper for front-end development.
+
+# Notes
+
 Cannot use phash at present, due to [this issue](https://github.com/aaronm67/node-phash/issues/17),
 so it's removed from `package.json`:
 

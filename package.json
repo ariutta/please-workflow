@@ -1,5 +1,5 @@
 {
-  "name": "workflow-bob",
+  "name": "please-workflow",
   "version": "0.0.1",
   "description": "Workflow setup for developing, building and publishing JS.",
   "main": "./lib/index.js",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ariutta/workflow-bob.git"
+    "url": "https://github.com/ariutta/please-workflow.git"
   },
   "keywords": [
     "workflow",
@@ -30,9 +30,9 @@
     "gulp"
   ],
   "author": "Anders Riutta",
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ariutta/workflow-bob/issues"
+    "url": "https://github.com/ariutta/please-workflow/issues"
   },
   "readmeFilename": "README.md",
   "style": [
