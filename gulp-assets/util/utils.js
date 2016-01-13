@@ -3,8 +3,8 @@ var fs = require('fs');
 var highland = require('highland');
 var inquirer = require('inquirer');
 var mkdirp = require('mkdirp');
-var Rx = require('rx');
-var RxNode = require('rx-node');
+var RxNode = require('rx-node-extra');
+var Rx = RxNode.Rx;
 
 var createExecStream = highland.wrapCallback(exec);
 var createExecSource = Rx.Observable.fromNodeCallback(exec);
@@ -37,7 +37,5 @@ utils.fsReadOrCreateSource = function(filePath) {
       return Rx.Observable.fromNodeCallback(fs.readFile)(filePath, 'utf8');
     });
 };
-
-utils.readdirSource = Rx.Observable.fromNodeCallback(fs.readdir);
 
 module.exports = utils;
